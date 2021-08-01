@@ -1,0 +1,23 @@
+drop table if exists Пользователи;
+create table Пользователи (
+id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+Телефон BIGINT UNSIGNED UNIQUE, 
+password_hash VARCHAR(50)
+);
+
+DROP TABLE IF EXISTS Профили;
+CREATE TABLE Профили (
+	Пользователь_id BIGINT UNSIGNED NOT NULL UNIQUE,
+	почта VARCHAR(120) unique,
+	имя VARCHAR(50),
+    фамилия VARCHAR(50),
+    отчество VARCHAR(50),
+    деньрождения DATE,
+    пол CHAR(1),
+	СНИЛС BIGINT UNSIGNED unique,
+	ИНН BIGINT UNSIGNED unique,
+	дата_создания DATETIME DEFAULT NOW()
+);
+
+ALTER TABLE Профили
+ADD FOREIGN KEY (Пользователь_id) REFERENCES Пользователи(id);
