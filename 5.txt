@@ -1,0 +1,50 @@
+Добавлена таблица Документы
+
+DROP DATABASE IF EXISTS gov_service;
+CREATE DATABASE gov_service;
+USE gov_service;
+
+drop table if exists Users;
+create table Users (
+id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+phone BIGINT UNSIGNED UNIQUE, 
+password_hash VARCHAR(50)
+);
+
+DROP TABLE IF EXISTS Profile;
+
+DROP TABLE IF EXISTS Profiles;
+CREATE table Profiles (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY key,
+	User_id BIGINT UNSIGNED NOT NULL UNIQUE,
+	mail VARCHAR(120) unique,
+	FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    MiddleName VARCHAR(50),
+    Birthday DATE,
+    Gender CHAR(1),
+	SNILS BIGINT UNSIGNED unique,
+	IIN BIGINT UNSIGNED unique,
+	Date_of_creation DATETIME DEFAULT NOW()
+);
+
+ALTER TABLE Profiles
+ADD FOREIGN KEY (User_id) REFERENCES Users(id);
+
+DROP TABLE IF EXISTS Document;
+
+DROP TABLE IF EXISTS Documents;
+CREATE TABLE Documents (   
+id BIGINT UNSIGNED NOT NULL,
+    Profile_id BIGINT UNSIGNED NOT NULL UNIQUE,
+    document_Type VARCHAR(50),
+	Series INT(4) not NULL,
+	`Number` INT(6)not NULL,
+	Issued_by VARCHAR(120),
+	Date_of_issue DATE,
+	Department_code INT(7)
+);
+	
+ALTER TABLE Documents
+add PRIMARY KEY (Series, `Number`), 
+ADD FOREIGN KEY (Profile_id) REFERENCES Profiles(id);
